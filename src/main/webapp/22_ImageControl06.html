@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>22_ImageControl06.html</title>
+    <style type="text/css">
+        #view{position:relative; width:600px; height:400px; margin:0 auto; border:1px dashed black; overflow:hidden;}
+        #imgs{position:absolute; width:4800px; height:400px; left:0; top:0; border:1px dashed red;}
+        img{width:600px; height:400px;}
+        
+        #remot{position:relative; width:200px; height:50px; margin:0 auto; top:350px; border:1px solid white; text-align:center;}
+        ul{list-style:none; display:inline-block; padding:0; margin:0;}
+        ul li{float:left; cursor:pointer; width:14px; height:14px; border-radius:50%; background:white; margin:18px 4px; color:black; font-size:70%; font-weight:bold; line-height:14px; text-align:center;}
+
+        .selected{background:navy; color:white; border:1px solid white;}
+    </style>	
+	<script src="script/jquery-3.6.0.js"></script>
+	<script type="text/javascript">
+        //리모트 버튼을 css를 이용해서 가운데 위치에 각 버튼들 가로방향으로 나란히 위치시킨다.
+        //버튼을 클릭하면 해당이미지의 위치로 animate를 이용해서 imgs를 이동시킨다.
+		$(function(){
+            $("li").click(function(){
+                var num = $(this).index();
+                $("#imgs").animate({left:num*-600}, 400);
+                
+                //클릭한 버튼에 색상이 바뀌게 class를 추가
+                $("li").removeClass('selected');
+                $(this).addClass('selected');
+            });
+            $("li:first").addClass('selected');
+		});
+	</script>
+</head>
+<body>
+    <div id="view">
+        <div id="imgs">
+            <img src="images/Koala.jpg"><img src="images/Chrysanthemum.jpg"><img src="images/Desert.jpg"><img src="images/Hydrangeas.jpg"><img src="images/Jellyfish.jpg"><img src="images/Lighthouse.jpg"><img src="images/Penguins.jpg"><img src="images/Tulips.jpg">
+        </div>
+        <div id="remot">
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

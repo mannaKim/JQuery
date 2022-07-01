@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>24_ImageControl08.html</title>
+    <style type="text/css">
+        #view{position:relative; width:600px; height:400px; margin:0 auto; border:1px dashed black; overflow:hidden;}
+        #imgs{position:absolute; width:4800px; height:400px; left:0; top:0; border:1px dashed red;}
+        img{width:600px; height:400px;}
+
+        #currentNum{position:absolute; width:100px; height:40px; top:0px; right:0px; border:1px solid white; color:white; font-size:150%; font-weight:bold; line-height:40px; padding-right:20px; text-align:right;}
+
+        #remot{position:relative; width:250px; height:50px; margin:0 auto; top:350px; border:1px solid white; text-align:center;}
+        ul{list-style:none; display:inline-block; padding:0; margin:0;}
+        ul li{float:left; cursor:pointer; width:14px; height:14px; border-radius:50%; background:white; margin:18px 4px; color:black; font-size:70%; font-weight:bold; line-height:14px; text-align:center;}
+
+        .selected{background:black; color:white; border:1px solid white;}
+    </style>	
+	<script src="script/jquery-3.6.0.js"></script>
+	<script type="text/javascript">
+        //1. 번호버튼과 자동버튼을 적절하게 배치
+        //2. 자동버튼을 클릭하면 이미지가 1초에 한번씩 이동하고 끝에 다다르면 처음으로 되돌아오도록
+        //3. 이미지가 표시될 때, 해당 이미지 번호버튼에 검은색 바탕 흰글씨 흰테두리 표시
+        //4. 이미지가 표시될 때, 우측 상단에 이미지 번호 표시
+        //5. 자동버튼은 토글기능을 부여해서 자동과 멈춤을 번갈아 동작되도록
+		$(function(){
+            var num=0;
+            var idx;
+            var timer;
+            var state=false;
+            $("li:first").addClass('selected');
+            $("li").click(function(){
+                idx = $(this).index();
+                if(idx==8){
+                    if(state==false){
+                    state=true;
+                    timer = setInterval(function(){
+                        num++;
+                        if(num>7) num=0;
+                        $("#imgs").animate({left:num*-600}, 300);
+                        $("li").removeClass('selected');
+                        $("li").eq(num).addClass('selected');
+                        $("#currentNum").html((num+1)+"/8");
+                    },1500);
+                    $(this).html("■");
+                    }else{
+                        clearInterval(timer);
+                        state=false;
+                        $(this).html("▶");
+                    }
+                }
+                else{
+                    num = $(this).index();
+                    $("#imgs").animate({left:num*-600}, 400);
+                    $("li").removeClass('selected');
+                    $(this).addClass('selected');
+                    $("#currentNum").html((num+1)+"/8");
+                }
+            });
+		});
+	</script>
+</head>
+<body>
+    <div id="view">
+        <div id="imgs">
+            <img src="images/Koala.jpg"><img src="images/Chrysanthemum.jpg"><img src="images/Desert.jpg"><img src="images/Hydrangeas.jpg"><img src="images/Jellyfish.jpg"><img src="images/Lighthouse.jpg"><img src="images/Penguins.jpg"><img src="images/Tulips.jpg">
+        </div>
+        <div id="remot">
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>▶</li>
+            </ul>
+        </div>
+        <div id="currentNum">1/8</div>
+    </div>
+</body>
+</html>

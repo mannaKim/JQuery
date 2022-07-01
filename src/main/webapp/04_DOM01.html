@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>04_DOM01.html</title>
+    <script src="script/jquery-3.6.0.js"></script>
+    <script type="text/javascript">
+        //DOM은 자바스크립트보다 제이쿼리에서 활용도가 높다!
+        //선택자 및 필터링으로서의 DOM
+        /*  기본 필터링 메서드 
+        // - filter() 메서드 사용 두 가지 형태
+            //1) $(selector).filter(selector);
+            //2) $(selector).filter(function(index){});
+            $(function(){
+                $("h3").filter(":even").css({background:"black", color:"white"});
+                //$("h3:even").css({background:"black", color:"white"});
+            }); //선택자의 짝수번쨰 또는 홀수번째 css변경
+            $(function(){
+                $("h3").filter(function(index){return index%3==0;}).css({background:"blue", color:"white"});
+                //filter 내의 익명함수가 전체 index를 대상으로하여 3으로 나눈 나머지가 0인 인덱스에만 true를 리턴
+                //filter true가 리턴된 인덱스에 대해서만 css적용
+                //인덱스3과 4만 골라내고 싶은 경우 익명함수 안에 return index==3||index==4;
+            });
+        */
+
+        /* 문서 객체 탐색 체이닝과 종료 */
+        //예제1. 
+        //체이닝을 사용해 한 줄로 서로 다른 문서 객체에 스타일 적용 가능
+        $(function(){
+            $("h3").css("background","orange").filter(":even").css("color","red");
+        }); //전체 h3태그의 배경은 오렌지, 짝수번째 h3들만 글자색 빨강
+        
+        //관련 셀렉터들로 필러링할때 체이닝과 filter를 사용(관련없는 대상을 체이닝하지는 않는다.)
+        //$("h3").css("background","orange").$("h1").css(); <-- X 잘못된 사용 예
+
+        //문서객체의 css변경을 마친 경우 리턴되는 값이 다시 문서객체($("h3")) 이므로 위와 같이 또다른 탐색이나 css내용을 이어서 적용시킬 수 있다.
+        //필터링된 선택자로 css를 변경한 후에 리턴된 선택자는 앞서 필터링한 결과를 그대로 유지
+        //따라서 다른 체이닝을 이어서 사용하면 계속 필터링된 결과에 적용되게 됨
+
+        //예제2.
+        //예제1의 체이닝 방식으로 실행하기 곤란한 상황에는 어떻게 함?
+        //전체 배경 오렌지, 짝수번째 글자 흰색, 홀수번째 글자 빨강
+        $(function(){
+            /*따로따로지정
+            $("h3").css("background","orange");
+            $("h3:even").css("color","white");
+            $("h3:odd").css("color","red");
+            */
+            
+            //체이닝 사용
+            //$("h3").css("background","orange").filter(":even").css("color","white").filter(":odd").css("color","red")
+            //위 명령은 짝수번째의 h3중 .filter(":odd")를 적용하면 짝수번쨰h3들을 대상으로 홀수번째를 골라냄
+            //그래서 end()를 사용해서 짝수번째 필터링을 제거하고 다시 홀수번째 필터링을 적용해야 함
+            $("h3").css("background","orange").filter(":even").css("color","white").end().filter(":odd").css("color","red")
+            //end():문서객체 선택을 필터링 이전 한 단계 뒤로 돌리는 함수*/
+        });
+
+
+        /* 문서 객체 추가 선택 */
+        // - add():기존 문서 객체를 포함하여 추가로 문서 객체를 선택
+        $(function(){
+            $("h1").css("background","gray").add("h2").css("color","red");
+            //h1에 배경 적용 후 h2도 추가해서 글자색 빨강으로 적용
+            //$("h1").css("background","gray")
+            //$("h1, h2").css("color","red");
+        });
+
+
+        /* 문서 객체의 특징 판별 */
+        // - is()
+        // $(this).index() : 현재 객체의 인덱스 값
+        // $(this).is(선택자) : this 내부에서 선택자로 추가 필터링한 객체
+        $(function(){
+            $("h4").each(function(){
+                if($(this).is(".select")){
+                    $(this).css("color","red"); //$("h4.select").css("color","red");
+                }
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <!-- 문서 객체 필터링 - 체이닝 - 종료 -->
+    <h3>Header - 0</h3>
+    <h3>Header - 1</h3>
+    <h3>Header - 2</h3>
+    <h3>Header - 3</h3>
+    <h3>Header - 4</h3>
+    <h3>Header - 5</h3>
+
+    <!-- 문서 객체 추가 선택 -->
+    <h1>Header - 0</h1>
+    <h2>Header - 1</h2>
+    <h1>Header - 2</h1>
+    <h2>Header - 3</h2>
+    <h1>Header - 4</h1>
+
+    <!-- 문서 객체의 특징 판별 -->
+    <h4 class="select">Header - 0</h4>
+    <h4>Header - 1</h4>
+    <h4 class="select">Header - 2</h4>
+</body>
+</html>

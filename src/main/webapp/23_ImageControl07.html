@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>23_ImageControl07.html</title>
+    <style type="text/css">
+        #view{position:relative; width:600px; height:400px; margin:0 auto; border:1px dashed black; overflow:hidden;}
+        #imgs{position:absolute; width:4800px; height:400px; left:0; top:0; border:1px dashed red;}
+        img{width:600px; height:400px;}
+
+        #lbutton{position:absolute; width:50px; height:50px; border-radius:50%; bottom:0px; left:0px; overflow:hidden; background-image:url(images/ico_movie_171115.png); background-position:-60px -460px; cursor:pointer;}
+        #rbutton{position:absolute; width:50px; height:50px; border-radius:50%; bottom:0px; right:0px; overflow:hidden; background-image:url(images/ico_movie_171115.png); background-position:0px -460px; cursor:pointer;}
+        /*
+        #lbutton{position:absolute; width:20px; height:20px; border-radius:50%; bottom:25px; left:50px; background:white; color:black; font-size:90%; font-weight:bold; text-align:center; line-height:18px; cursor:pointer;}
+        #rbutton{position:absolute; width:20px; height:20px; border-radius:50%; bottom:25px; right:50px; background:white; color:black; font-size:90%; font-weight:bold; text-align:center; line-height:18px; cursor:pointer;}
+        */
+
+        #currentNum{position:absolute; width:100px; height:40px; top:0px; right:0px; border:1px solid white; color:white; font-size:150%; font-weight:bold; line-height:40px; padding-right:20px; text-align:right;}
+    </style>	
+	<script src="script/jquery-3.6.0.js"></script>
+	<script type="text/javascript">
+        //1. 이미지들을 이전 예제와 같이 배치
+        //2. 이미지 하단 좌우에 배경을 설정하여 좌우 버튼(<, >)표시
+        //3. 버튼을 클릭하면 이미지를 한칸씩 이동하도록 작성
+        //4. id:currentNum 에 해당하는 div를 우측 상단에 배치하고, 이미지가 이동하여 표시될 때 마다 현재 이미지 번호를 흰글자로 표시(1/8, 2/8, 3/8 ... 8/8)
+		$(function(){
+            var num=0;
+            $("#lbutton").click(function(){
+                if(num==0) return;
+                num--;
+                $("#imgs").animate({left:num*-600}, 300);
+                $("#currentNum").html((num+1)+"/8");
+            });
+            $("#rbutton").click(function(){
+                if(num==7) return;
+                num++;
+                $("#imgs").animate({left:num*-600}, 300);
+                $("#currentNum").html((num+1)+"/8");
+            });
+            $("#currentNum").html("1/8");
+		});
+	</script>
+</head>
+<body>
+    <div id="view">
+        <div id="imgs">
+            <img src="images/Koala.jpg"><img src="images/Chrysanthemum.jpg"><img src="images/Desert.jpg"><img src="images/Hydrangeas.jpg"><img src="images/Jellyfish.jpg"><img src="images/Lighthouse.jpg"><img src="images/Penguins.jpg"><img src="images/Tulips.jpg">
+        </div>
+
+        <div id="lbutton"><!--&lt;--></div>
+        <div id="rbutton"><!--&gt;--></div>
+
+        <div id="currentNum"></div>
+    </div>
+</body>
+</html>

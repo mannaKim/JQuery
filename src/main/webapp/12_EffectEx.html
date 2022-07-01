@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>12_EffectEx</title>
+    <style type="text/css">
+        div{position:absolute; left:0; top:0; display:none;}
+        img{width:500px; height:350px;}
+    </style>	
+	<script src="script/jquery-3.6.0.js"></script>
+	<script type="text/javascript">
+        //setInterval을 사용하여 1초에 한번씩 익명함수가 실행되게 한다.
+        //익명함수의 내용은 모든 div를 fadeout하고, 변수에 의해 진행되고 있는 번호로 현재 이미지에 해당하는 div만 fadein 한다.
+        $(function(){
+            var num=0;
+            setInterval(function(){
+                //$("div").fadeOut(1500);
+                //$("div").eq(num).fadeIn(1500);
+               
+                for(var i=0; i<=5; i++){
+                    if(num==i) $("div").eq(i).fadeIn(1500);
+                    else $("div").eq(i).fadeOut(1500);
+                }
+                num++;
+                if(num==6) num=0;
+            },1500);
+        });
+    </script>
+</head>
+<body>
+    <div><img src="images/Desert.jpg"></div>
+    <div><img src="images/Hydrangeas.jpg"></div>
+    <div><img src="images/Chrysanthemum.jpg"></div>
+    <div><img src="images/Koala.jpg"></div>
+    <div><img src="images/Penguins.jpg"></div>
+    <div><img src="images/Tulips.jpg"></div>
+</body>
+</html>

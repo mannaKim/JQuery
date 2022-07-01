@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>17_ImageControl01.html</title>
+    <style type="text/css"></style>	
+	<script src="script/jquery-3.6.0.js"></script>
+	<script type="text/javascript">
+        //각 이미지에 마우스가 올라가면 다음과 같이 이미지를 변경
+        // 1.jpg <--> 3.jpg
+        // 2.jpg <--> 4.jpg
+		$(function(){
+            /*
+            $("img:first").mouseenter(function(){
+                $(this).attr("src","images/3.jpg");
+            });
+            $("img:first").mouseout(function(){
+                $(this).attr("src","images/1.jpg");
+            });
+            */
+            $("img:first").hover(
+                function(){$(this).attr("src","images/3.jpg");},
+                function(){$(this).attr("src","images/1.jpg");}
+            );
+
+            /*
+            $("img:last").mouseenter(function(){
+                $(this).attr("src","images/4.jpg");
+            });
+            $("img:last").mouseout(function(){
+                $(this).attr("src","images/2.jpg");
+            });
+            */
+            $("img:last").hover(
+                function(){$(this).attr("src","images/4.jpg");},
+                function(){$(this).attr("src","images/2.jpg");}
+            );
+        });
+	</script>
+</head>
+<body>
+    <img src="images/1.jpg">
+    <img src="images/2.jpg">
+</body>
+</html>

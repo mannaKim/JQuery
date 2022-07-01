@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>02_JQuery_Basic02.html</title>
+    <script src="script/jquery-3.6.0.js"></script>
+    <script type="text/javascript">
+        // 4. 선택자
+        /* 6-1) 자식선택자와 후손 선택자 
+        // - 자식(손) 선택자, 후손 선택자 
+        //$(function(){$("div h1").css("color","red");});
+        //$(function(){$("div>h1").css("color","blue");});
+        //선택자1 선택자2 : 선택자1의 자손중 선택자2 모두(자손의 자손도 포함)
+        //선택자1>선택자2 : 선택자1의 바로 아래 자손들 중 선택자2 모두(자손의 자손은 미포함)
+        */
+
+        /* 6-2) 자식선택자와 후손 선택자
+        // - 두 개 이상의 요소를 한번에 변경
+        $(function(){
+            //$("#wrap>section").children().css(
+            //    {"background-color":"yellow", "border":"3px solid #f00", "color":"red"}
+            //); 
+            // .children() : 선택자로 선택한 태그 중 자신을 제외한 모든 자식 태그를 선택
+            // 두가지 이상의 변경을 위해 위 명령처럼 객체 형식을 사용할 수 있다.
+            //== $("#wrap>section").children().css("background-color","yellow").css("border","3px solid #f00").css("color","red"); 
+
+            //$("#wrap h1").css(
+            //    {"background-color":"yellow", "border":"2px dashed #00f"}
+            //);
+
+            $("#wrap>h1").css("border","2px dashed green");
+        });
+        */
+
+        /* 6-3) 자식선택자와 후손 선택자 */
+        // - prev(), next(), $(".txt+p")
+        $(function(){
+            var style_1 = {"background-color":"#0ff", "border":"2px solid #f00"};
+            var style_2 = {"background-color":"#ff0", "border":"2px dashed #f00"};
+            //스타일 객체를 변수에 저장하여 활용
+            //$(".txt").prev().css(style_1);
+            //$(".txt").next().next().css(style_2);
+            //$(".txt+p").css(style_2);
+        });
+        /* 함수형 선택자
+            $("요소선택자").parent() : 요소선택자의 부모요소를 선택한다.
+            $("요소선택자").parents() : 요소선택자의 상위요소를 모두 선택한다.
+            $("요소선택자").closest("div") : 요소선택자의 상위요소 중 가장 가까운 div만 선택한다.
+
+            $("요소선택자 하위요소") : 요소선택자의 지정 하위요소를 모두 선택한다.
+            $("요소선택자>자식요소") : 요소선택자의 1단계 자식에 있는 자식요소만 선택한다.
+            $("요소선택자+하위요소") : 요소선택자의 바로 다음에 나오는 지정 하위요소를 선택한다.
+            $("요소선택자~하위요소") : 요소선택자의 뒤에 나오는 지정 하위요소들을 선택한다.
+
+            $("요소선택자").children() : 요소선택자의 모든 자식요소를 선택한다.
+            $("요소선택자").prev() : 요소선택자의 바로 이전요소를 선택한다.
+            $("요소선택자").prevAll() : 요소선택자의 모든 이전요소를 선택한다.
+            $("요소선택자").prevUntil("요소명") : 요소선택자의 요소명에 지정한 곳까지 모두 선택한다.
+            $("요소선택자").next() : 요소선택자의 다음요소를 선택한다.
+            $("요소선택자").nextAll() : 요소선택자의 모든 다음요소를 선택한다.
+            $("요소선택자").nextUntil("h2") : 요소선택자부터 h2태그 요소까지 모두 선택한다
+            $("요소선택자").siblings() : 요소선택자의 형제요소 전체를 선택한다.
+        */
+
+        /* 6-3) 자식선택자와 후손 선택자 
+        // - prevAll(), nextAll(), siblings()
+        $(function(){
+            var style_1 = {"background-color":"#0ff", "border":"2px solid #f00"};
+            var style_2 = {"background-color":"#ff0", "border":"2px dashed #f00"};
+            var style_3 = {"color":"#F00"};
+            
+            //$(".txt").prevAll().css(style_1);
+            //$(".txt").nextAll().css(style_2);
+            //$(".txt").siblings().css(style_3);
+        });
+        */
+
+        /* 6-4) 자식선택자와 후손 선택자 
+        // - nextUntil(), prevUntil()
+        $(function(){
+            var style_1 = {"background-color":"#0ff", "border":"2px solid #f00"};
+            var style_2 = {"background-color":"#ff0", "border":"2px dashed #f00"};
+            //$(".txt3").prevUntil(".title").css(style_1);
+            //$(".txt3").nextUntil(".txt6").css(style_2);
+        });
+        */
+
+        /* 6-5) 자식선택자와 후손 선택자  
+        // - parents(), parents("div")
+        $(function(){
+            // .txt1의 모든 부모들
+            //$(".txt1").parents().css({"border":"3px dashed #00f"});
+
+            // .txt2의 모든 부모들 중 div만
+            //$(".txt2").parents("div").css({"border":"3px dashed #00f"});
+            
+            // .txt1의 부모만
+            $(".txt1").parent().css({"border":"3px dashed #00f"});
+        }); 
+        */
+
+        // 6-6)
+        // - closest("div")
+        $(function(){
+            $(".txt1").closest("div").css({"border":"2px solid #f00"});
+        });
+    </script>
+</head>
+<body>
+    <!-- 6-1)
+    <div>
+        <h1>자식(손) 선택자와 후손 선택자</h1>
+        <ul>
+            <li><h1>Apple</h1></li>
+            <li>Bag</li>
+            <li>Cat</li>
+            <li>Dog</li>
+        </ul>
+        <h1>자식(손) 선택자와 후손 선택자</h1>
+    </div>
+    -->
+
+    <!-- 6-2) 
+    <div id="wrap">
+        <h1>인접 관계 선택자</h1>
+        <p>내용1</p>
+        <section>
+            <h1>자식 요소 선택자</h1>
+            <p>내용2</p>
+        </section>
+        <h1>인접 관계 선택자</h1>
+    </div>
+    -->
+
+    <!-- 6-3) 
+    <div id="wrap">
+        <h1>인접 관계 선택자</h1>
+        <p>내용0</p>
+        <p>내용1</p>
+        <p class="txt">내용2</p>
+        <p>내용3</p>
+        <p>내용4</p>
+    </div>
+    -->
+
+    <!-- 6-4) 
+    <h1 class="title">선택자</h1>
+    <p>내용1</p>
+    <p>내용2</p>
+    <p class="txt3">내용3</p>
+    <p>내용4</p>
+    <p>내용5</p>
+    <p class="txt6">내용6</p>
+    -->
+
+    <!-- 6-5) 
+    <h1 class="title">선택자</h1>
+    <section>
+        <div>
+            <p class="txt1">내용</p>
+        </div>
+    </section>
+    <section>
+        <div>
+            <p class="txt2">내용</p>
+        </div>
+    </section>
+    -->
+
+    <!-- 6-6) -->
+    <h1 class="title">선택자</h1>
+    <div style="border:3px dashed blue; padding:5px">
+        <div style="border:3px dashed blue; padding:5px">
+            <p class="txt1">내용</p>
+        </div>
+    </div>
+</body>
+</html>

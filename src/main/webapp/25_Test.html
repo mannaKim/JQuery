@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>25_Test.html</title>
+    <style type="text/css">
+        #view{position:relative; width:600px; height:400px; margin:0 auto; border:1px dashed black; overflow:hidden;}
+        #imgs{position:absolute; width:4800px; height:400px; left:0; top:0; border:1px dashed red;}
+        img{width:600px; height:400px;}
+
+        #currentNum{position:absolute; width:100px; height:40px; top:0px; right:0px; color:white; font-size:150%; font-weight:bold; line-height:40px; padding-right:20px; text-align:right;}
+
+        #remot{position:relative; width:350px; height:50px; margin:0 auto; top:350px; border:1px solid white; text-align:center;}
+        ul{list-style:none; display:inline-block; padding:0; margin:0;}
+        ul li{float:left; cursor:pointer; width:14px; height:14px; border-radius:50%; background:white; margin:18px 8px; color:black; font-size:70%; font-weight:bold; line-height:14px; text-align:center;}
+
+        .selected{background:black; color:white; border:1px solid white;}
+    </style>	
+	<script src="script/jquery-3.6.0.js"></script>
+	<script type="text/javascript">
+        //1. 8장의 이미지를 가로 600px, 세로 400px의 view에 표시
+        //2. 1~8번 버튼을 클릭하면 해당 이미지가 view에 표시되도록 제이쿼리로 코딩
+        //3. 왼쪽 버튼과 오른쪽 버튼을 클릭하면 바로 왼쪽 또는 오른쪽 이미지가 view에 표시되도록 코딩
+        //4. 자동 버튼을 클릭하면 1.5초에 한장씩 다음 이미지가 view에 표시되도록 코딩
+        //5. 자동 버튼이 클릭되어 자동으로 이미지가 바뀌고 있을때는 왼쪽오른쪽,1~8버튼이 동작하지 않도록 코딩
+        //6. 1~8버튼에는 항상 현재 이미지에 맞는 번호에 검은 배경에 흰색글자 그리고 흰색 테두리가 표시되도록
+        //※자동모드로 이미지가 바뀔때와 왼쪽오른쪽 버튼이 클릭되어 이미지가 바뀔때도 해당 번호에 같은 서식을 지정
+        //7. 화면우측 상단에 현재 이미지번호가 1/8, 2/8 ... 8/8 형식으로 표시되게 코딩
+        //8. 그 외 사항은 기존 예제와 똑같이 또는 임의로 지정
+        //9. 버튼의 배치는 기존 자바스크립트때와 같이 왼쪽 1~8 오른쪽 자동 순서로 아래쪽 가운데에 배치
+        $(function(){
+            var imgNum=1;
+            var idx;
+            var timer;
+            var state=false;
+            $("li:eq(1)").addClass('selected');
+            $("li").click(function(){
+                idx = $(this).index();
+
+                if(idx==0){ //lbutton
+                    if(state==true) return;
+                    if(imgNum==1) return;
+                    imgNum--;
+                    $("#imgs").animate({left:(imgNum-1)*-600}, 300);
+                    $("li").removeClass('selected');
+                    $("li").eq(imgNum).addClass('selected');
+                    $("#currentNum").html(imgNum+"/8");
+                }
+                else if(idx==9){ //rbutton
+                    if(state==true) return;
+                    if(imgNum==8) return;
+                    imgNum++;
+                    $("#imgs").animate({left:(imgNum-1)*-600}, 300);
+                    $("li").removeClass('selected');
+                    $("li").eq(imgNum).addClass('selected');
+                    $("#currentNum").html(imgNum+"/8");
+                }
+                else if(idx==10){ //auto
+                    if(state==false){
+                        state=true;
+                        timer = setInterval(function(){
+                            imgNum++;
+                            if(imgNum>8) imgNum=1;
+                            $("#imgs").animate({left:(imgNum-1)*-600}, 300);
+                            $("li").removeClass('selected');
+                            $("li").eq(imgNum).addClass('selected');
+                            $("#currentNum").html(imgNum+"/8");
+                        },1500);
+                        $(this).html("■");
+                    }else{
+                        clearInterval(timer);
+                        state=false;
+                        $(this).html("▶");
+                    }
+                }
+                else{
+                    if(state==true) return;
+                    imgNum=$(this).index();
+                    $("#imgs").animate({left:(imgNum-1)*-600}, 400);
+                    $("li").removeClass('selected');
+                    $(this).addClass('selected');
+                    $("#currentNum").html(imgNum+"/8");
+                }
+            });
+		});
+	</script>
+</head>
+<body>
+    <div id="view">
+        <div id="imgs">
+            <img src="images/Koala.jpg"><img src="images/Chrysanthemum.jpg"><img src="images/Desert.jpg"><img src="images/Hydrangeas.jpg"><img src="images/Jellyfish.jpg"><img src="images/Lighthouse.jpg"><img src="images/Penguins.jpg"><img src="images/Tulips.jpg">
+        </div>
+        <div id="remot">
+            <ul>
+                <li>◁</li> 
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>▷</li>
+                <li>▶</li>
+            </ul>
+        </div>
+        <div id="currentNum">1/8</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>05_DOM03.html</title>
+    <script src="script/jquery-3.6.0.js"></script>
+    <style type="text/css">
+        .item_1{background: red; color: white;}
+        .item_2{background: pink; color: white;}
+        .item_3{background: orange; color: white;}
+    </style>
+    <script type="text/javascript">
+        /* 11. 문서 객체의 생성(1) 
+            //document.createElement(), document.createTextNode()
+            //위 명령들은 자바스크립트에서 사용하는 문서객체 생성 함수
+
+            //제이쿼리에서 문서객체 생성
+            //- $() : 문서 객체 생성
+            //- $() 함수의 매개변수에 HTML 태그 자체를 문자열로 넣기만 하면 해당 태그의 문서 객체가 생성됨
+            //- 방법 #1 : 생성한 문서 객체를 body태그에 추가
+            $(function(){
+                $('<h1></h1>').html("Hello jQuery#1").appendTo('body');
+            }); 
+            //- 방법 #2 : $() 메서드 내부에 HTML 태그를 바로 넣어 body에 추가
+            $(function(){
+                $('<h1>Hello jQuery#2</h1>').appendTo('body');
+            }); 
+        */
+
+        /* 12. 문서 객체의 생성(2) 
+            //- 텍스트 노드를 갖지 않는 문서 객체를 생성하는 방법
+            $(function(){
+                $('<img/>').attr({src:"images/Koala.jpg", width:"200"}).appendTo('body');
+            }); 
+            $(function(){
+                $('<img/>').attr({src:"images/Penguins.jpg", height:"200"}).appendTo('body');
+            });
+        */
+
+        /* 13. 문서 객체의 삽입(1) */
+            //- $(A).appendTo(B) : A를 B의 뒷부분(자식요소)에 추가 한다
+            //- $(A).prependTo(B) : A를 B의 앞부분(자식요소)에 추가 한다
+            //- $(A).insertAfter(B) : A를 B의 뒤(형제요소)에 추가한다
+            //- $(A).insertBefore(B) : A를 B의 앞(형제요소)에 추가 한다
+
+        /* 14. 문서 객체의 삽입(2) */
+            //- $(A).append(B) : B를 A의 뒷 부분에 추가한다.
+            //- $(A).prepend(B) : B를 A의 앞 부분에 추가한다.
+            //- $(A).after(B) : B를 A의 뒤에 추가한다.
+            //- $(A).before(B) : B를 A의 앞에 추가한다.
+
+        /* 14-1) $(selector).append(content,content,...) 
+            // 추가할 대상들은 여러개의 대상을 한번에 추가할 수 있다.
+            $(function(){
+                //$(A).appendTo(B) - B의 뒷부분(마지막)에 A를 추가한다.
+                $('<img/>').attr({src:"images/Koala.jpg", width:"200"}).appendTo("body");
+                var h1='<h1>Header - 1</h1>';
+                var h2='<h2>Header - 2</h2>';
+                //$(A).before(B) - A의 앞부분(처음)에 B를 추가한다.
+                $("body").before(h1,h2,h1,h2)
+            });
+            // 전달내용.appendTo(목적지)  목적지.append(전달내용)  <-- 전달내용을 목적지 뒤로 (데이터 기준점의 뒤로 삽입됨)
+            // 목적지.before(전달내용) <-- 전달내용을 목적지 앞으로 (데이터 기준점의 앞으로 삽입됨)
+        */
+
+        /* 14-2) $(selector).append(function(index){}) 
+            $(function(){
+                var content=["홍길동","김길동","박길동"];
+                $.each(content, function(index,item){
+                    $("#name_region").append($("<li>"+item+"</li>"));
+                });
+            }); 
+            // 목적지 : #name_ragion
+            // 전달내용 : 배열에 있는 값들을 li 태그에 넣은 개체들
+        */
+
+        /* 14-3) 
+            $(function(){
+                $("<div>이길동</div>").insertAfter($("header"));
+            });
+        */
+
+        /* 15. 문서 객체의 이동 
+            $(function(){
+                $("img").css("width","200");
+                // 첫번째 이미지를 맨 뒤로 이동(1초마다 반복)
+                setInterval(function(){
+                    //$("img").first().appendTo("body");
+                    //== $("img").eq(0).appendTo(body); == $("img:eq(0)").appendTo(body);
+
+                    //마지막 이미지를 맨 앞으로 이동
+                    $("img").last().prependTo("body");
+                }, 1000);
+                
+            });
+        */
+
+        /* 16. 문서 객체의 복제 및 이동 */
+            // 기존 문서객체를 선택하고 문서 객체 삽입 메서드를 사용하면, 문서객체가 이동
+            $(function(){
+                //$("div").append($("h1"));
+            });
+            // - clone() : 문서 객체 복제
+            // - $(selector).clone()
+            // - $(selector).clone(Boolean dataAndEvents)
+            // - $(selector).clone(Boolean dataAndEvents, Boolean deepDataAndEvents)
+            $(function(){
+                $("div").append($("h1").clone());
+            });
+    </script>
+</head>
+<body>
+    <!-- 16. 문서 객체의 복제 및 이동 -->
+    <h1>Header-1</h1>
+    <h2>Header-2</h2>
+    <hr/>
+    <div></div>
+    <hr/>
+
+    <!-- 15. 문서 객체의 이동 
+    <img src="images/Chrysanthemum.jpg"/><img src="images/Desert.jpg"/><img src="images/Hydrangeas.jpg"/><img src="images/Koala.jpg"/><img src="images/Penguins.jpg"/><img src="images/Tulips.jpg"/>
+    -->
+
+    <!-- 14. 문서 객체의 삽입(2-2) 
+    <div>
+        <b>------데이터 기준점(2)------</b>
+        <ul id="name_region"></ul>
+    </div>
+    -->
+    <!-- 14. 문서 객체의 삽입(2-1) 
+    <header>
+        <h1>------데이터 기준점(1)------</h1>
+    </header>
+    -->
+</body>
+</html>
